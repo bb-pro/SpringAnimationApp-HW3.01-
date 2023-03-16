@@ -20,20 +20,19 @@ final class SpringAnimationViewController: UIViewController {
     
     @IBOutlet var animateButton: SpringButton!
     
-    private var currentAnimation: Animation!
-    private var nextAnimation: Animation!
+    private var animation = Animation.getRandomAnimation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScreen()
-        currentAnimation = Animation.getRandomAnimation()
-        animateButton.setTitle("Run \(currentAnimation.preset)", for: .normal)
+        animation = Animation.getRandomAnimation()
+        animateButton.setTitle("Run \(animation.preset)", for: .normal)
     }
     
     @IBAction func animatePressed() {
-        nextAnimation = Animation.getRandomAnimation()
-        animateButton.setTitle("Run \(nextAnimation.preset)", for: .normal)
-        animate(with: currentAnimation)
+        setupScreen()
+        animate(with: animation)
+        animateButton.setTitle("Run \(animation.preset)", for: .normal)
     }
 }
 
@@ -47,7 +46,8 @@ private extension SpringAnimationViewController {
         springAnimationView.delay = animation.delay
         springAnimationView.animate()
         updateUI(with: animation)
-        currentAnimation = nextAnimation
+        self.animation = Animation.getRandomAnimation()
+        animateButton.setTitle(animation.preset, for: .normal)
     }
     
     func updateUI(with data: Animation) {
