@@ -20,18 +20,18 @@ final class SpringAnimationViewController: UIViewController {
     
     @IBOutlet var animateButton: SpringButton!
     
-    private var currentAnimation: AnimationModel!
-    private var nextAnimation: AnimationModel!
+    private var currentAnimation: Animation!
+    private var nextAnimation: Animation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScreen()
-        currentAnimation = AnimationModel.getRandomAnimation()
+        currentAnimation = Animation.getRandomAnimation()
         animateButton.setTitle("Run \(currentAnimation.preset)", for: .normal)
     }
     
     @IBAction func animatePressed() {
-        nextAnimation = AnimationModel.getRandomAnimation()
+        nextAnimation = Animation.getRandomAnimation()
         animateButton.setTitle("Run \(nextAnimation.preset)", for: .normal)
         animate(with: currentAnimation)
     }
@@ -39,7 +39,7 @@ final class SpringAnimationViewController: UIViewController {
 
 private extension SpringAnimationViewController {
 
-    func animate(with animation: AnimationModel) {
+    func animate(with animation: Animation) {
         springAnimationView.animation = animation.preset
         springAnimationView.curve = animation.curve
         springAnimationView.force = animation.force
@@ -50,7 +50,7 @@ private extension SpringAnimationViewController {
         currentAnimation = nextAnimation
     }
     
-    func updateUI(with data: AnimationModel) {
+    func updateUI(with data: Animation) {
         presetLabel.text = data.preset
         curveLabel.text = data.curve
         forceLabel.text = stringFrom(data.force)
