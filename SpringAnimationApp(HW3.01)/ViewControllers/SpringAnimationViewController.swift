@@ -9,7 +9,7 @@ import UIKit
 import SpringAnimation
 
 final class SpringAnimationViewController: UIViewController {
-
+    
     @IBOutlet var springAnimationView: SpringView!
     
     @IBOutlet var presetLabel: UILabel!
@@ -18,24 +18,26 @@ final class SpringAnimationViewController: UIViewController {
     @IBOutlet var durationLabel: UILabel!
     @IBOutlet var delayLabel: UILabel!
     
+    @IBOutlet var animateButton: SpringButton!
+    
     private var currentAnimation: AnimationModel!
     private var nextAnimation: AnimationModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupScreen()
         currentAnimation = AnimationModel.getRandomAnimation()
+        animateButton.setTitle("Run \(currentAnimation.preset)", for: .normal)
     }
     
-    @IBAction func animatePressed(_ sender: SpringButton) {
+    @IBAction func animatePressed() {
         nextAnimation = AnimationModel.getRandomAnimation()
-        sender.setTitle(nextAnimation.preset, for: .normal)
+        animateButton.setTitle("Run \(nextAnimation.preset)", for: .normal)
         animate(with: currentAnimation)
-        
     }
-    
 }
 
-extension SpringAnimationViewController {
+private extension SpringAnimationViewController {
 
     func animate(with animation: AnimationModel) {
         springAnimationView.animation = animation.preset
@@ -47,12 +49,22 @@ extension SpringAnimationViewController {
         updateUI(with: animation)
         currentAnimation = nextAnimation
     }
+    
     func updateUI(with data: AnimationModel) {
         presetLabel.text = data.preset
         curveLabel.text = data.curve
-        forceLabel.text = data.force.formatted()
-        durationLabel.text = data.duration.formatted()
-        delayLabel.text = data.delay.formatted()
+        forceLabel.text = stringFrom(data.force)
+        durationLabel.text = stringFrom(data.duration)
+        delayLabel.text = stringFrom(data.delay)
+    }
+    
+    func setupScreen(){
+        springAnimationView.layer.cornerRadius = 10
+        animateButton.layer.cornerRadius = 10
+    }
+    
+    func stringFrom(_ number: CGFloat) -> String {
+        String(format: "%.2f", number)
     }
 }
 

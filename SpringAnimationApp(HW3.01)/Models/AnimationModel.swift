@@ -17,10 +17,11 @@ struct AnimationModel {
     
     static func getRandomAnimation() -> AnimationModel {
         AnimationModel(
-            preset: AnimationPreset.allCases.randomElement()?.rawValue ?? "",
-            curve: AnimationCurve.allCases.randomElement()?.rawValue ?? "",
-            force: CGFloat.random(in: 0.5...10),
-            duration: CGFloat.random(in: 0.1...2),
-            delay: CGFloat.random(in: 0.5...2))
+            preset: AnimationPreset.allCases.randomElement()?.rawValue ?? "slideDown",
+            curve: AnimationCurve.allCases.randomElement()?.rawValue ?? "easeInQuad",
+            force: CGFloat.random(in: 0.5...6),
+            duration: CGFloat.random(in: 0.1...3),
+            delay: CGFloat.random(in: 0.1...0.9)
+        )
     }
 }
